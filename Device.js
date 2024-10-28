@@ -26,7 +26,7 @@ function hslToRgb(h, s, l) {
 }
 
 function log(message) {
-    console.log(`[@bjclopes/homebridge-ledstrip-bledom]:`, message);
+  console.log(`[@bjclopes/homebridge-ledstrip-bledom]:`, message);
 }
 
 module.exports = class Device {
@@ -50,11 +50,7 @@ module.exports = class Device {
     });
 
     noble.on("discover", async (peripheral) => {
-		console.log(
-			"[@bjclopes/homebridge-ledstrip-bledom]:",
-			peripheral.uuid,
-			peripheral.advertisement.localName
-		);
+      console.log("[@bjclopes/homebridge-ledstrip-bledom]:", peripheral.uuid, peripheral.advertisement.localName);
       if (peripheral.uuid == this.uuid) {
         this.peripheral = peripheral;
         noble.stopScanning();
@@ -67,15 +63,11 @@ module.exports = class Device {
       noble.startScanningAsync();
       return;
     }
-	 log(`Connecting to ${this.peripheral.uuid}...`);
+    log(`Connecting to ${this.peripheral.uuid}...`);
     await this.peripheral.connectAsync();
-	 log(`Connected`);
+    log(`Connected`);
     this.connected = true;
-    const { characteristics } =
-      await this.peripheral.discoverSomeServicesAndCharacteristicsAsync(
-        ["fff0"],
-        ["fff3"]
-      );
+    const { characteristics } = await this.peripheral.discoverSomeServicesAndCharacteristicsAsync(["fff0"], ["fff3"]);
     this.write = characteristics[0];
   }
 
@@ -97,10 +89,7 @@ module.exports = class Device {
   async set_power(status) {
     if (!this.connected) await this.connectAndGetWriteCharacteristics();
     if (this.write) {
-      const buffer = Buffer.from(
-        `7e0404${status ? "01" : "00"}00${status ? "01" : "00"}ff00ef`,
-        "hex"
-      );
+      const buffer = Buffer.from(`7e0404${status ? "f00001" : "000000"}ff00ef`, "hex");
       log(buffer);
       this.write.write(buffer, true, (err) => {
         if (err) console.log("Error:", err);
@@ -115,7 +104,7 @@ module.exports = class Device {
     if (!this.connected) await this.connectAndGetWriteCharacteristics();
     if (this.write) {
       const level_hex = ("0" + level.toString(16)).slice(-2);
-      const buffer = Buffer.from(`7e0401${level_hex}ffffff00ef`, "hex");
+      const buffer = Buffer.from(`7e0401${level_hex}01ffff00ef`, "hex");
       log(buffer);
       this.write.write(buffer, true, (err) => {
         if (err) console.log("Error:", err);
