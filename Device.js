@@ -52,7 +52,7 @@ function hslToRgb(h, s, l) {
 
 function log(message) {
   const timestamp = new Date().toISOString();
-  console.log(`[${timestamp}][@bjclopes/homebridge-ledstrip-bledom]:`, message);
+  console.log(`[${timestamp}][@cagdaskemik/ledstrip-bledom]:`, message);
 }
 
 module.exports = class Device {
