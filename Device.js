@@ -1,5 +1,30 @@
 const noble = require("@abandonware/noble");
 
+const EFFECTS = {
+  JUMP_RGB: 0x87,
+  JUMP_RGBYCMW: 0x88,
+  CROSSFADE_RED: 0x8b,
+  CROSSFADE_GREEN: 0x8c,
+  CROSSFADE_BLUE: 0x8d,
+  CROSSFADE_YELLOW: 0x8e,
+  CROSSFADE_CYAN: 0x8f,
+  CROSSFADE_MAGENTA: 0x90,
+  CROSSFADE_WHITE: 0x91,
+  CROSSFADE_RG: 0x92,
+  CROSSFADE_RB: 0x93,
+  CROSSFADE_GB: 0x94,
+  CROSSFADE_RGB: 0x89,
+  CROSSFADE_RGBYCMW: 0x8a,
+  BLINK_RED: 0x96,
+  BLINK_GREEN: 0x97,
+  BLINK_BLUE: 0x98,
+  BLINK_YELLOW: 0x99,
+  BLINK_CYAN: 0x9a,
+  BLINK_MAGENTA: 0x9b,
+  BLINK_WHITE: 0x9c,
+  BLINK_RGBYCMW: 0x95,
+};
+
 function hslToRgb(h, s, l) {
   var r, g, b;
 
@@ -146,6 +171,32 @@ module.exports = class Device {
       const rgb = hslToRgb(this.hue / 360, saturation / 100, this.l);
       this.set_rgb(rgb[0], rgb[1], rgb[2]);
       this.debounceDisconnect();
+    }
+  }
+
+  async set_effect(effect) {
+    if (!this.connected) await this.connectAndGetWriteCharacteristics();
+    if (this.write) {
+      const buffer = Buffer.from(`7e000303${effect.toString(16)}030000ef`, "hex");
+      log(buffer);
+      this.write.write(buffer, true, (err) => {
+        if (err) console.log("Error:", err);
+        this.debounceDisconnect();
+      });
+    }
+  }
+
+  async set_effect_speed(speed) {
+    if (speed > 100 || speed < 0) return;
+    if (!this.connected) await this.connectAndGetWriteCharacteristics();
+    if (this.write) {
+      const speed_hex = ("0" + speed.toString(16)).slice(-2);
+      const buffer = Buffer.from(`7e000202${speed_hex}000000ef`, "hex");
+      log(buffer);
+      this.write.write(buffer, true, (err) => {
+        if (err) console.log("Error:", err);
+        this.debounceDisconnect();
+      });
     }
   }
 };

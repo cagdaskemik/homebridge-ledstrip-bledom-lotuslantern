@@ -1,6 +1,6 @@
 {
-    "name": "@bjclopes/homebridge-ledstrip-bledom",
-    "version": "1.5.1",
+    "name": "@cagdaskemik/homebridge-ledstrip-bledom-lotuslantern",
+    "version": "1.0.0",
     "displayName": "Homebridge Ledstrip BLEDOM",
     "description": "",
     "main": "index.js",
@@ -9,7 +9,8 @@
         "prompt-sync": "^4.2.0"
     },
     "keywords": [
-        "homebridge-plugin"
+        "homebridge-plugin",
+        "homebridge-config-ui-x"
     ],
     "engines": {
         "node": ">=12.13.0",
@@ -20,12 +21,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bjclopes/homebridge-ledstrip-bledom.git"
+        "url": "git+https://github.com/cagdaskemik/homebridge-ledstrip-bledom-lotuslantern.git"
     },
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/bjclopes/homebridge-ledstrip-bledom/issues"
+        "url": "https://github.com/cagdaskemik/homebridge-ledstrip-bledom-lotuslantern/issues"
     },
-    "homepage": "https://github.com/bjclopes/homebridge-ledstrip-bledom#readme"
+    "homepage": "https://github.com/cagdaskemik/homebridge-ledstrip-bledom-lotuslantern#readme"
 }

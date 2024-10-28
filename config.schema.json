@@ -1,0 +1,42 @@
+{
+    "pluginAlias": "LedStrip",
+    "pluginType": "accessory",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "required": true,
+          "default": "LED Strip"
+        },
+        "uuid": {
+          "title": "Device UUID",
+          "type": "string",
+          "required": true,
+          "description": "The UUID of your LED strip (without colons, lowercase)"
+        },
+        "effect": {
+          "title": "Effect Mode",
+          "type": "string",
+          "required": false,
+          "default": "none",
+          "oneOf": [
+            { "title": "None", "enum": ["none"] },
+            { "title": "Jump RGB", "enum": ["JUMP_RGB"] },
+            { "title": "Jump RGBYCMW", "enum": ["JUMP_RGBYCMW"] },
+            { "title": "Crossfade RGB", "enum": ["CROSSFADE_RGB"] },
+            { "title": "Crossfade RGBYCMW", "enum": ["CROSSFADE_RGBYCMW"] },
+            { "title": "Blink RGBYCMW", "enum": ["BLINK_RGBYCMW"] }
+          ]
+        },
+        "effectSpeed": {
+          "title": "Effect Speed",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 50
+        }
+      }
+    }
+  }
